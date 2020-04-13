@@ -1,13 +1,18 @@
 {
-    "env": {
-        "node": true
-    },
-    "extends": "airbnb-base",
-    "rules": {
-    	// Code's accessibility matters
-    	"indent": [ "error", "tab" ],
-    	"no-tabs": ["error", { "allowIndentationTabs": true }],
-    	"max-len": "off",
-    	"padded-blocks": "off"
-    }
+  "env": {
+      "es6": true,
+      "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2017,
+    "sourceType": "module"
+  },
+  "extends": "airbnb-base",
+  "rules": {
+    // Code's accessibility matters
+    "indent": [ "error", "tab" ],
+    "no-tabs": ["error", { "allowIndentationTabs": true }],
+    "max-len": "off",
+    "padded-blocks": "off"
+  }
 }
