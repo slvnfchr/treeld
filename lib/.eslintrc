@@ -13,6 +13,25 @@
     "indent": [ "error", "tab" ],
     "no-tabs": ["error", { "allowIndentationTabs": true }],
     "max-len": "off",
+    "object-curly-newline": ["error", {
+        "ObjectExpression": { "multiline": true },
+        "ObjectPattern": "never"
+    }],
     "padded-blocks": "off"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.spec.js"],
+      "env": {
+        "mocha": true
+      },
+      "globals": {
+        "expect": true,
+        "spy": true
+      },
+      "rules": {
+        "no-unused-expressions": "off",
+      }
+    }
+  ]
 }
