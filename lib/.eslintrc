@@ -1,0 +1,13 @@
+{
+    "env": {
+        "node": true
+    },
+    "extends": "airbnb-base",
+    "rules": {
+    	// Code's accessibility matters
+    	"indent": [ "error", "tab" ],
+    	"no-tabs": ["error", { "allowIndentationTabs": true }],
+    	"max-len": "off",
+    	"padded-blocks": "off"
+    }
+}

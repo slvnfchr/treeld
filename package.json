@@ -1,5 +1,17 @@
 {
   "name": "treeld",
   "version": "1.0.0",
-  "description": "GEDCOM to JSON-LD converter"
+  "description": "GEDCOM to JSON-LD converter",
+  "engines": {
+    "node": ">=10.0.0",
+    "npm": ">=5.2.0"
+  },
+  "scripts": {
+    "lint": "eslint ./lib"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2"
+  }
 }

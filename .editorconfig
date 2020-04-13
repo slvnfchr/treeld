@@ -1,0 +1,21 @@
+
+# top-most EditorConfig file
+root = true
+
+# Unix-style newlines with a newline ending every file
+[*]
+end_of_line = lf
+insert_final_newline = true
+
+# Set default charset
+[*.{js,css,htm}]
+charset = utf-8
+
+# Tab indentation
+[*.js]
+indent_style = tab
+
+# Matches the exact files either package.json or .travis.yml
+[{package.json,lib/.eslintrc}]
+indent_style = space
+indent_size = 2
