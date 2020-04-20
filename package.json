@@ -8,7 +8,7 @@
   },
   "scripts": {
     "lint": "eslint ./lib",
-    "test": "mocha --reporter spec -r esm ./lib/**.spec.js"
+    "test": "mocha --reporter spec -r esm ./lib/test.js"
   },
   "devDependencies": {
     "chai": "^4.2.0",
