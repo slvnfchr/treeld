@@ -13,10 +13,7 @@
     "indent": [ "error", "tab" ],
     "no-tabs": ["error", { "allowIndentationTabs": true }],
     "max-len": "off",
-    "object-curly-newline": ["error", {
-        "ObjectExpression": { "multiline": true },
-        "ObjectPattern": "never"
-    }],
+    "object-curly-newline": ["error", { "multiline": true }],
     "padded-blocks": "off"
   },
   "overrides": [
