@@ -7440,6 +7440,10 @@
         }
       ],
       "name": "United States of America",
+      "alternateName": [
+        "United States",
+        "USA"
+      ],
       "sameAs": [
         "https://en.wikipedia.org/wiki/ISO_3166-2:US"
       ],
