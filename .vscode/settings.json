@@ -1,0 +1,8 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "files.trimTrailingWhitespace": true,
+  "files.eol": "\n",
+  "eslint.validate": ["javascript"],
+  "prettier.disableLanguages": []
+}

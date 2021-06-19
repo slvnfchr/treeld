@@ -1,0 +1,14 @@
+{
+  "bracketSpacing": true,
+  "printWidth": 200,
+  "overrides": [
+    {
+      "files": ["*.js"],
+      "options": {
+        "singleQuote": true,
+        "quoteProps": "consistent",
+        "useTabs": true
+      }
+    }
+  ]
+}
