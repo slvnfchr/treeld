@@ -1,34 +1,36 @@
 {
   "env": {
-      "es6": true,
-      "node": true
+    "es6": true,
+    "node": true,
   },
   "parserOptions": {
-    "ecmaVersion": 2017,
-    "sourceType": "module"
+    "ecmaVersion": 6,
+    "sourceType": "module",
   },
   "extends": ["airbnb-base", "prettier"],
+  "plugins": ["prettier"],
   "rules": {
+    "import/extensions": ["error", "ignorePackages"],
     // Code's accessibility matters
-    "indent": [ "error", "tab" ],
+    "indent": ["error", "tab"],
     "no-tabs": ["error", { "allowIndentationTabs": true }],
     "max-len": "off",
     "object-curly-newline": ["error", { "multiline": true }],
-    "padded-blocks": "off"
+    "padded-blocks": "off",
   },
   "overrides": [
     {
       "files": ["*.spec.js"],
       "env": {
-        "mocha": true
+        "mocha": true,
       },
       "globals": {
         "expect": true,
-        "spy": true
+        "spy": true,
       },
       "rules": {
         "no-unused-expressions": "off",
-      }
-    }
-  ]
+      },
+    },
+  ],
 }
