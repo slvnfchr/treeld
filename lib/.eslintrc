@@ -4,7 +4,7 @@
     "node": true,
   },
   "parserOptions": {
-    "ecmaVersion": 6,
+    "ecmaVersion": 13,
     "sourceType": "module",
   },
   "extends": ["airbnb-base", "prettier"],
@@ -17,13 +17,11 @@
     "max-len": "off",
     "object-curly-newline": ["error", { "multiline": true }],
     "padded-blocks": "off",
+    "no-restricted-syntax": "off",
   },
   "overrides": [
     {
       "files": ["*.spec.js"],
-      "env": {
-        "mocha": true,
-      },
       "globals": {
         "expect": true,
         "spy": true,

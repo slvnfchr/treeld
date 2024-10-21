@@ -4,5 +4,6 @@
   "files.trimTrailingWhitespace": true,
   "files.eol": "\n",
   "eslint.validate": ["javascript"],
+  "js/ts.implicitProjectConfig.checkJs": true,
   "prettier.disableLanguages": []
 }
