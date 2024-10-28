@@ -17,6 +17,7 @@
     "max-len": "off",
     "object-curly-newline": ["error", { "multiline": true }],
     "padded-blocks": "off",
+    "no-param-reassign": ["error", { "props": false }],
     "no-restricted-syntax": "off",
   },
   "overrides": [

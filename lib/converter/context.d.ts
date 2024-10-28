@@ -20,8 +20,10 @@ export class Context {
   vocabularies: Vocabulary[];
   setDefault(vocabulary: Vocabulary): void;
   getDefault(): Vocabulary;
-  add(vocabulary: Vocabulary): void;
-  remove(vocabulary: Vocabulary): void;
+  addVocabulary(vocabulary: Vocabulary): void;
+  removeVocabulary(vocabulary: Vocabulary): void;
+  add(property: Record<string, string | object>): void;
+  remove(property: Record<string, string | object>): void;
 }
 
 export type ObjectLD = {
