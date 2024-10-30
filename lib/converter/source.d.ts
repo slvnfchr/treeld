@@ -1,6 +1,7 @@
-import { WithContext, ArchiveComponent } from "./context/schema";
+import { ArchiveComponent } from "./context/schema";
+import { ObjectLD } from "./context";
 
-export type Source = WithContext<ArchiveComponent>;
+export type SourceLD = ObjectLD<ArchiveComponent>;
 
 export const converter: Function;
 

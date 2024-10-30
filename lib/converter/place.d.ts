@@ -1,6 +1,7 @@
-import { WithContext, Place as PlaceSchema } from "./context/schema";
+import { Place } from "./context/schema";
+import { ObjectLD } from "./context";
 
-export type Place = WithContext<PlaceSchema>;
+export type PlaceLD = ObjectLD<Place>;
 
 export const converter: Function;
 

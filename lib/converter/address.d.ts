@@ -1,6 +1,7 @@
-import { WithContext, PostalAddress } from "./context/schema";
+import { PostalAddress } from "./context/schema";
+import { ObjectLD } from "./context";
 
-export type Address = WithContext<PostalAddress>;
+export type AddressLD = ObjectLD<PostalAddress>;
 
 const map: Map<string, Function>;
 export default map;
