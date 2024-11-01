@@ -1,7 +1,7 @@
-import { Xref } from "../parser";
-import { Chunk, WithNote, WithMultimedia } from "./common";
-import { DateValue, DatePeriod, WithChangeDate } from "./date";
-import { Place, WithAddress } from "./location";
+import { Xref } from "../parser/types.ts";
+import { Chunk, WithNote, WithMultimedia } from "./types.ts";
+import { DateValue, WithChangeDate } from "./date.ts";
+import { Place, WithAddress } from "./location.ts";
 
 /**
  * Source citation
@@ -9,60 +9,64 @@ import { Place, WithAddress } from "./location";
 
 type CertaintyAssessment = "0" | "1" | "2" | "3";
 
-export type SourceCitation = Chunk &
-  WithNote<
-    WithMultimedia<{
+export type SourceCitation = WithNote<
+  WithMultimedia<
+    Chunk & {
       "@value": Xref;
       PAGE?: string;
       EVEN?:
         | string
-        | {
+        | (Chunk & {
             "@value": string;
             ROLE?: string;
-          };
+          });
       DATA?: {
         DATE?: DateValue;
         TEXT?: string;
       };
       QUAY?: CertaintyAssessment;
-    }>
-  >;
+    }
+  >
+>;
 
 export type WithSourceCitation<T extends Chunk> = T & {
-  SOUR?: WithNote<ChangeDate>;
+  SOUR?: SourceCitation;
 };
 
 /**
  * Source record
  */
 
-export type Source = Chunk &
-  WithChangeDate<
-    WithNote<
-      WithMultimedia<{
+export type Source = WithChangeDate<
+  WithNote<
+    WithMultimedia<
+      Chunk & {
         "@ref": Xref;
-        DATA?: WithNote<{
-          EVEN?: {
-            "@value": string;
-            DATE?: DatePeriod;
-            PLAC?: Place;
-          };
-          AGNC?: string;
-        }>;
+        DATA?: WithNote<
+          Chunk & {
+            EVEN?: {
+              "@value": string;
+              DATE?: DateValue;
+              PLAC?: Place;
+            };
+            AGNC?: string;
+          }
+        >;
         AUTH?: string;
         TITL?: string;
         ABBR?: string;
         PUBL?: string;
         TEXT?: string;
         SOUR?: RepositoryCitation;
-        REFN?: {
+        REFN?: Chunk & {
           "@value": string;
           TYPE?: string;
         };
         RIN?: string;
-      }>
+      }
     >
-  >;
+  >
+>;
 
 /**
  * Repository citation
@@ -77,17 +81,18 @@ export type RepositoryCitation = Chunk & {
  * Repository record
  */
 
-export type Repository = Chunk &
-  WithAddress<
-    WithNote<
-      WithChangeDate<{
+export type Repository = WithAddress<
+  WithNote<
+    WithChangeDate<
+      Chunk & {
         "@ref": Xref;
         NAME: string;
-        REFN?: {
+        REFN?: Chunk & {
           "@value": string;
           TYPE: string;
         };
         RIN?: string;
-      }>
+      }
     >
-  >;
+  >
+>;

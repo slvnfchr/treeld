@@ -1,4 +1,4 @@
-import { Xref } from "../parser";
+import { Xref } from "../parser/types.ts";
 
 export type Chunk = {
   "@parent"?: Chunk;

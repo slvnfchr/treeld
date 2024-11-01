@@ -1,4 +1,4 @@
-import { Chunk, WithNote } from "./common";
+import { Chunk, WithNote } from "./types.ts";
 
 /**
  * Date structure
@@ -39,15 +39,15 @@ export type Date = Chunk & {
   TIME?: Time;
 };
 
-type DatePeriod = `FROM ${Date}` | `TO ${Date}` | `FROM ${Date} TO ${Date}`;
+type DatePeriod = `FROM ${DateCalendar}` | `TO ${DateCalendar}` | `FROM ${DateCalendar} TO ${DateCalendar}`;
 
-type DateRange = `BEF ${Date}` | `AFT ${Date}` | `BET ${Date} AND ${Date}`;
+type DateRange = `BEF ${DateCalendar}` | `AFT ${DateCalendar}` | `BET ${DateCalendar} AND ${DateCalendar}`;
 
-type DateApproximated = `ABT ${Date}` | `CAL ${Date}` | `EST ${Date}`;
+type DateApproximated = `ABT ${DateCalendar}` | `CAL ${DateCalendar}` | `EST ${DateCalendar}`;
 
-export type DateValue = Date | DatePeriod | DateRange | DateApproximated | `(${string})` | `ÌNT ${Date} (${string})`;
+export type DateValue = Date | DatePeriod | DateRange | DateApproximated | `(${string})` | `ÌNT ${DateCalendar} (${string})`;
 
-type ChangeDate = {
+type ChangeDate = Chunk & {
   DATE: {
     "@value": DateExact;
     TIME?: Time;

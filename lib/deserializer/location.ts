@@ -1,4 +1,4 @@
-import { Chunk, Note } from "./common";
+import { Chunk, Note } from "./types.ts";
 
 /**
  * Place structure
@@ -29,7 +29,7 @@ export type Place = Chunk & {
  * Address structure
  */
 
-type Address = Chunk & {
+export type Address = Chunk & {
   ADR1?: string;
   ADR2?: string;
   ADR3?: string;

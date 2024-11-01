@@ -1,24 +1,26 @@
-import { Chunk, WithNote, WithMultimedia } from "./common";
+import { Xref } from "../parser/types.ts";
+import { Chunk, WithNote, WithMultimedia } from "./types.ts";
 import { DateValue } from "./date";
-import { WithAddress } from "./location";
+import { WithAddress, Place } from "./location";
 
 /**
  * Event structure
  */
 
-type EventDetail = Chunk &
-  WithAddress<
-    WithNote<
-      WithMultimedia<{
+export type EventDetail = WithAddress<
+  WithNote<
+    WithMultimedia<
+      Chunk & {
         TYPE?: string;
         DATE?: DateValue;
         PLAC?: Place;
         AGNC?: string;
         RELI?: string;
         CAUS?: string;
-      }>
+      }
     >
-  >;
+  >
+>;
 
 export type WithEvent<T extends Chunk> = T & {
   BIRT?: EventDetail & { FAMC?: Xref };
@@ -27,7 +29,6 @@ export type WithEvent<T extends Chunk> = T & {
   BURI?: EventDetail;
   CREM?: EventDetail;
   ADOP?: EventDetail & { FAMC?: { "@value": Xref; ADOP?: "HUSB" | "WIFE" | "BOTH" } };
-  BAPM?: EventDetail;
   BAPM?: EventDetail;
   BARM: EventDetail;
   BASM?: EventDetail;
@@ -47,7 +48,7 @@ export type WithEvent<T extends Chunk> = T & {
   } & EventDetail;
 };
 
-type FamilyEventDetail = {
+export type FamilyEventDetail = {
   HUSB?: {
     AGE: number;
   };
