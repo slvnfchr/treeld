@@ -28,7 +28,20 @@ export type ObjectLD<T = Thing> = {
   [k: string]: string | object;
 } & WithContext<T>;
 
-export type Converter<T> = (obj: Chunk, controller: TransformStreamDefaultController) => T;
+export type ConversionResult<T> = {
+  value: T | null;
+  info?: object | string;
+  warn?: object | string;
+  error?: Error;
+};
+
+export type ConversionLogger = {
+  info: Function;
+  warn: Function;
+  error: Function;
+};
+
+export type Converter<T> = (obj: Chunk, controller: TransformStreamDefaultController) => ConversionResult<T>;
 
 export type ConversionMap = Map<string, Function>;
 

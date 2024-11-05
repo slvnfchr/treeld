@@ -19,6 +19,7 @@
     "padded-blocks": "off",
     "no-param-reassign": ["error", { "props": false }],
     "no-restricted-syntax": "off",
+    "no-return-assign": ["error", { "except-parens": true }],
   },
   "overrides": [
     {
