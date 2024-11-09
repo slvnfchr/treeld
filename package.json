@@ -9,8 +9,8 @@
   },
   "scripts": {
     "lint": "eslint ./lib",
-    "test": "node --test-reporter spec ./lib/*.spec.js",
-    "coverage": "c8 --exclude 'lib/**/*.spec.js' node ./lib/*.spec.js"
+    "test": "node --test-reporter spec ./lib/index.spec.js",
+    "coverage": "c8 --exclude 'lib/**/*.spec.js' node ./lib/index.spec.js"
   },
   "devDependencies": {
     "@types/node": "20.12.8",
