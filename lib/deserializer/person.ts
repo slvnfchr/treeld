@@ -104,6 +104,20 @@ export type WithAttribute<T extends Chunk> = T & {
   FACT?: IndividualAttribute;
 };
 
+type WithNamesPieces<T extends Chunk> = T &
+  WithNote<
+    WithSourceCitation<
+      Chunk & {
+        NPFX?: string;
+        GIVN?: string;
+        NICK?: string;
+        SPFX?: string;
+        SURN?: string;
+        NSFX?: string;
+      }
+    >
+  >;
+
 export type Person = WithEvent<
   WithAttribute<
     WithAssociation<
@@ -113,7 +127,28 @@ export type Person = WithEvent<
             WithMultimedia<
               Chunk & {
                 "@ref": Xref;
-                NAME?: string;
+                NAME?: WithNote<
+                  WithSourceCitation<
+                    WithNamesPieces<
+                      Chunk & {
+                        "@value": string;
+                        TYPE?: string;
+                        FONE?: WithNamesPieces<
+                          Chunk & {
+                            "@value": string;
+                            TYPE: string;
+                          }
+                        >;
+                        ROMN?: WithNamesPieces<
+                          Chunk & {
+                            "@value": string;
+                            TYPE: string;
+                          }
+                        >;
+                      }
+                    >
+                  >
+                >;
                 SEX?: "U" | "M" | "F" | "X" | "N";
                 FAMC?: WithNote<
                   Chunk & {

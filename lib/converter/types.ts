@@ -1,9 +1,11 @@
 import { Chunk } from "../deserializer/types";
 import { WithContext, Thing, PostalAddress, Event, Place, ArchiveOrganization, ArchiveComponent } from "schema-dts";
 
-type ObjectTypes = {
-  [k: string]: string;
-};
+type ObjectTypes =
+  | {}
+  | {
+      [k: string]: string;
+    };
 
 export type Vocabulary = {
   URI: string;
