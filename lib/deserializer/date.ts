@@ -32,20 +32,22 @@ type DateCalendar =
   | `@#DFRENCH R@ ${DateFrench}`
   | `@#DUNKNOWN@ ${string}`;
 
-export type DateExact = `${number} ${Month} ${number}`;
-
-export type Date = Chunk & {
-  "@value": DateCalendar;
-  TIME?: Time;
-};
-
 type DatePeriod = `FROM ${DateCalendar}` | `TO ${DateCalendar}` | `FROM ${DateCalendar} TO ${DateCalendar}`;
 
 type DateRange = `BEF ${DateCalendar}` | `AFT ${DateCalendar}` | `BET ${DateCalendar} AND ${DateCalendar}`;
 
 type DateApproximated = `ABT ${DateCalendar}` | `CAL ${DateCalendar}` | `EST ${DateCalendar}`;
 
-export type DateValue = Date | DatePeriod | DateRange | DateApproximated | `(${string})` | `ÌNT ${DateCalendar} (${string})`;
+export type DateValue = DateCalendar | DatePeriod | DateRange | DateApproximated | `(${string})` | `ÌNT ${DateCalendar} (${string})`;
+
+export type Date =
+  | DateValue
+  | (Chunk & {
+      "@value": DateValue;
+      TIME?: Time;
+    });
+
+type DateExact = `${Day} ${Month} ${Year}`;
 
 type ChangeDate = Chunk & {
   DATE: {

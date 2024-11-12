@@ -52,13 +52,25 @@ export type AddressLD = ObjectLD<PostalAddress>;
 type Year = `${number}${number}${number}${number}`;
 type Month = `${number}${number}`;
 type Day = `${number}${number}`;
+
 type Hours = `${number}${number}`;
 type Minutes = `${number}${number}`;
 type Seconds = `${number}${number}`;
 type Milliseconds = `${number}${number}${number}`;
-type DateISODate = `${Year}-${Month}-${Day}`;
-type DateISOTime = `${Hours}:${Minutes}:${Seconds}.${Milliseconds}`;
-export type DateISO = `${DateISODate}T${DateISOTime}Z`;
+type Time = `${Hours}:${Minutes}:${Seconds}.${Milliseconds}`;
+
+type DateISO = Year | `${Year}-${Month}` | `${Year}-${Month}-${Day}` | `${Year}-${Month}-${Day}T${Time}Z`;
+
+type DateValue = string & (DateISO | `${DateISO}?` | `${DateISO}~` | `${DateISO}%`);
+
+type DateRange = string & (`${DateValue}/..` | `../${DateValue}`);
+
+type DatePeriod = {
+  start: DateValue;
+  end: DateValue;
+};
+
+export type Date = DateValue | DateRange | DatePeriod;
 
 export type EventLD = ObjectLD<Event>;
 
