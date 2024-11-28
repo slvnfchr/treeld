@@ -1,7 +1,7 @@
 import { Xref } from "../parser/types.ts";
-import { Chunk, WithNote, WithMultimedia } from "./types.ts";
-import { DateValue, WithChangeDate } from "./date.ts";
-import { Place, WithAddress } from "./location.ts";
+import { Chunk, Language, Multiple, ScalarOrObject, Note, MultimediaLink } from "./types.ts";
+import { Date, ChangeDate, CreationDate } from "./date.ts";
+import { Place, Address } from "./location.ts";
 
 /**
  * Source citation
@@ -9,90 +9,88 @@ import { Place, WithAddress } from "./location.ts";
 
 type CertaintyAssessment = "0" | "1" | "2" | "3";
 
-export type SourceCitation = WithNote<
-  WithMultimedia<
-    Chunk & {
-      "@value": Xref;
-      PAGE?: string;
-      EVEN?:
-        | string
-        | (Chunk & {
-            "@value": string;
-            ROLE?: string;
-          });
-      DATA?: {
-        DATE?: DateValue;
-        TEXT?: string;
-      };
-      QUAY?: CertaintyAssessment;
-    }
-  >
+export type SourceCitation = ScalarOrObject<
+  Xref,
+  {
+    PAGE?: string;
+    DATA?: Chunk<{
+      DATE?: Date;
+      TEXT?: Multiple<ScalarOrObject<string, { MIME?: string; LANG: Language }>>;
+    }>;
+    EVEN?: ScalarOrObject<string, { PHRASE?: string; ROLE?: ScalarOrObject<string, { PHRASE: string }> }>;
+    QUAY?: CertaintyAssessment;
+    OBJE?: Multiple<MultimediaLink>;
+    NOTE?: Multiple<Note>;
+    SNOTE?: Multiple<Xref>;
+  }
 >;
-
-export type WithSourceCitation<T extends Chunk> = T & {
-  SOUR?: SourceCitation;
-};
 
 /**
  * Source record
  */
 
-export type Source = WithChangeDate<
-  WithNote<
-    WithMultimedia<
-      Chunk & {
-        "@ref": Xref;
-        DATA?: WithNote<
-          Chunk & {
-            EVEN?: {
-              "@value": string;
-              DATE?: DateValue;
-              PLAC?: Place;
-            };
-            AGNC?: string;
-          }
-        >;
-        AUTH?: string;
-        TITL?: string;
-        ABBR?: string;
-        PUBL?: string;
-        TEXT?: string;
-        SOUR?: RepositoryCitation;
-        REFN?: Chunk & {
-          "@value": string;
-          TYPE?: string;
-        };
-        RIN?: string;
-      }
-    >
-  >
->;
+export type Source = {
+  "@ref": Xref;
+  DATA?: Chunk<{
+    EVEN?: Multiple<
+      ScalarOrObject<
+        string,
+        {
+          DATE?: ScalarOrObject<Date, { PHRASE: string }>;
+          PLAC?: Place;
+        }
+      >
+    >;
+    AGNC?: string;
+    NOTE?: Multiple<Note>;
+    SNOTE?: Multiple<Xref>;
+  }>;
+  AUTH?: string;
+  TITL?: string;
+  ABBR?: string;
+  PUBL?: string;
+  TEXT?: ScalarOrObject<string, { MIME: string; LANG: Language }>;
+  SOUR?: Multiple<RepositoryCitation>;
+  REFN?: ScalarOrObject<string, { TYPE: string }>;
+  UID?: string;
+  EXID?: ScalarOrObject<string, { TYPE: string }>;
+  NOTE?: Multiple<Note>;
+  SNOTE?: Multiple<Xref>;
+  OBJE?: Multiple<MultimediaLink>;
+  CHAN?: ChangeDate;
+  CREA?: CreationDate;
+};
 
 /**
  * Repository citation
  */
 
-export type RepositoryCitation = Chunk & {
-  "@value": Xref;
-  CALN?: string;
-};
+export type RepositoryCitation = ScalarOrObject<
+  Xref,
+  {
+    NOTE?: Multiple<Note>;
+    SNOTE?: Multiple<Xref>;
+    CALN?: ScalarOrObject<string, { MEDI: ScalarOrObject<string, { PHRASE: string }> }>;
+  }
+>;
 
 /**
  * Repository record
  */
 
-export type Repository = WithAddress<
-  WithNote<
-    WithChangeDate<
-      Chunk & {
-        "@ref": Xref;
-        NAME: string;
-        REFN?: Chunk & {
-          "@value": string;
-          TYPE: string;
-        };
-        RIN?: string;
-      }
-    >
-  >
->;
+export type Repository = {
+  "@ref": Xref;
+  NAME: string;
+  ADDR?: Address;
+  PHON?: Multiple<string>;
+  EMAIL?: Multiple<string>;
+  FAX?: Multiple<string>;
+  WWW?: Multiple<string>;
+  NOTE?: Multiple<Note>;
+  SNOTE?: Multiple<Xref>;
+  REFN?: ScalarOrObject<string, { TYPE: string }>;
+  UID?: string;
+  EXID?: ScalarOrObject<string, { TYPE: string }>;
+  CHAN?: ChangeDate;
+  CREA?: CreationDate;
+};

@@ -1,4 +1,4 @@
-import { Chunk, WithNote } from "./types.ts";
+import { Chunk, Multiple, ScalarOrObject, Note } from "./types.ts";
 
 /**
  * Date structure
@@ -32,30 +32,18 @@ type DateCalendar =
   | `@#DFRENCH R@ ${DateFrench}`
   | `@#DUNKNOWN@ ${string}`;
 
-type DatePeriod = `FROM ${DateCalendar}` | `TO ${DateCalendar}` | `FROM ${DateCalendar} TO ${DateCalendar}`;
+export type DatePeriod = `FROM ${DateCalendar}` | `TO ${DateCalendar}` | `FROM ${DateCalendar} TO ${DateCalendar}`;
 
 type DateRange = `BEF ${DateCalendar}` | `AFT ${DateCalendar}` | `BET ${DateCalendar} AND ${DateCalendar}`;
 
 type DateApproximated = `ABT ${DateCalendar}` | `CAL ${DateCalendar}` | `EST ${DateCalendar}`;
 
-export type DateValue = DateCalendar | DatePeriod | DateRange | DateApproximated | `(${string})` | `ÌNT ${DateCalendar} (${string})`;
+type DateValue = DateCalendar | DatePeriod | DateRange | DateApproximated | `(${string})` | `ÌNT ${DateCalendar} (${string})`;
 
-export type Date =
-  | DateValue
-  | (Chunk & {
-      "@value": DateValue;
-      TIME?: Time;
-    });
+export type Date = ScalarOrObject<DateValue, { TIME?: Time; PHRASE?: string }>;
 
 type DateExact = `${Day} ${Month} ${Year}`;
 
-type ChangeDate = Chunk & {
-  DATE: {
-    "@value": DateExact;
-    TIME?: Time;
-  };
-};
+export type CreationDate = Chunk<{ DATE: ScalarOrObject<DateExact, { TIME?: Time }> }>;
 
-export type WithChangeDate<T extends Chunk> = T & {
-  CHAN?: WithNote<ChangeDate>;
-};
+export type ChangeDate = Chunk<{ DATE: ScalarOrObject<DateExact, { TIME?: Time } & Multiple<Note>> }>;

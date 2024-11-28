@@ -1,16 +1,37 @@
 import { Xref } from "../parser/types.ts";
 
-export type Chunk = {
-  "@parent"?: Chunk;
+export type Chunk<T extends Object> = {
+  "@parent"?: Chunk<Object>;
   "@type": string;
+} & T;
+
+export type Language = string;
+
+export type Multiple<T> = T | T[];
+
+export type ScalarOrObject<T, U> =
+  | T
+  | Chunk<
+      {
+        "@value": T;
+      } & U
+    >;
+
+export type WithTranslation<T extends Object> = T & {
+  TRAN?: ScalarOrObject<string, { LANG: Language } & T>;
 };
 
-export type Note = Xref | string;
+export type Note = ScalarOrObject<string, WithTranslation<{ MIME: string }>>;
 
-export type WithNote<T extends Chunk> = T & {
-  NOTE?: Note;
-};
-
-export type WithMultimedia<T extends Chunk> = T & {
-  OBJE?: Xref;
-};
+export type MultimediaLink = ScalarOrObject<
+  Xref,
+  {
+    CROP?: Chunk<{
+      TOP: number;
+      LEFT: number;
+      HEIGHT: number;
+      WIDTH: number;
+    }>;
+    TITL?: string;
+  }
+>;
