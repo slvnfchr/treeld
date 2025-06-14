@@ -4,8 +4,8 @@
   "description": "GEDCOM to JSON-LD converter",
   "type": "module",
   "engines": {
-    "node": ">=20.9.0",
-    "npm": ">=10.1.0"
+    "node": ">=22",
+    "npm": ">=10.9"
   },
   "scripts": {
     "lint": "eslint ./lib",
