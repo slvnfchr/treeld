@@ -1,17 +1,20 @@
-import { Xref } from "../parser/types.ts";
+import { Xref, Tag } from "../parser/types.ts";
+import { Language } from "../gedcom/types.ts";
 
-export type Chunk<T extends Object> = {
-  "@parent"?: Chunk<Object>;
-  "@type": string;
-} & T;
+export type Chunk = {
+  "@parent"?: Chunk;
+  "@type": Tag;
+  "@index"?: number;
+  [key: Tag]: string | string[] | Chunk | Chunk[];
+};
 
-export type Language = string;
+export type ChunkWith<T extends Object> = Chunk & T;
 
 export type Multiple<T> = T | T[];
 
 export type ScalarOrObject<T, U> =
   | T
-  | Chunk<
+  | ChunkWith<
       {
         "@value": T;
       } & U
@@ -21,12 +24,10 @@ export type WithTranslation<T extends Object> = T & {
   TRAN?: ScalarOrObject<string, { LANG: Language } & T>;
 };
 
-export type Note = ScalarOrObject<string, WithTranslation<{ MIME: string }>>;
-
 export type MultimediaLink = ScalarOrObject<
   Xref,
   {
-    CROP?: Chunk<{
+    CROP?: ChunkWith<{
       TOP: number;
       LEFT: number;
       HEIGHT: number;

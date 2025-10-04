@@ -1,6 +1,8 @@
-type ExtendedTag = `_${string}`;
-type StandardTag = `${string}`;
-type Tag = StandardTag | ExtendedTag;
+import { Branded } from "../utils/types.ts";
+
+type ExtendedTag = Branded<`_${string}`, "ExtendedTag">;
+type StandardTag = Branded<string, "StandardTag">;
+export type Tag = StandardTag | ExtendedTag;
 
 export type Xref = `@${Tag}@`;
 
