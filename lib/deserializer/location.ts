@@ -1,4 +1,6 @@
-import { Chunk, Note, Language } from "./types.ts";
+import { ChunkWith, Optional, Several } from "./types.ts";
+import { Language } from "../gedcom/types.ts";
+import { Note } from "./note.ts";
 
 /**
  * Place structure
@@ -16,21 +18,22 @@ type GeoCoordinates = {
   LONG: `${"E" | "W"}${number}.${number}`;
 };
 
-export type Place = Chunk<{
-  "@value": PlaceName;
-  FORM?: PlaceName;
-  LANG: Language;
-  FONE?: Variation<PlaceName, "Hangul" | "kana">; // TODO handle multiple phonetisation
-  ROMN?: Variation<PlaceName, "pinyin" | "romaji" | "wadegiles">; // TODO handle multiple romanisation
-  MAP?: GeoCoordinates;
-  NOTE?: Note;
-}>;
+export type Place = ChunkWith<
+  {
+    "@value": PlaceName;
+    FORM?: PlaceName;
+    LANG: Language;
+    FONE?: Variation<PlaceName, "Hangul" | "kana">; // TODO handle multiple phonetisation
+    ROMN?: Variation<PlaceName, "pinyin" | "romaji" | "wadegiles">; // TODO handle multiple romanisation
+    MAP?: GeoCoordinates;
+  } & Optional<Several<Note>>
+>;
 
 /**
  * Address structure
  */
 
-export type Address = Chunk<{
+export type Address = ChunkWith<{
   ADR1?: string;
   ADR2?: string;
   ADR3?: string;
