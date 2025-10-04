@@ -1,12 +1,20 @@
 import { Xref } from "../parser/types.ts";
-import { Chunk, Note, Multiple, ScalarOrObject } from "./types.ts";
+import { ChunkWith, Optional, Several, Role } from "./types.ts";
+import { Note } from "./note.ts";
 import { SourceCitation } from "./source.ts";
 
-export type Association = Chunk<{
-  "@value": Xref;
-  PHRASE?: string;
-  ROLE: ScalarOrObject<string, { PHRASE: string }>;
-  NOTE?: Multiple<Note>;
-  SNOTE?: Multiple<Xref>;
-  SOUR?: Multiple<SourceCitation>;
-}>;
+/**
+ * Association structure
+ * see https://gedcom.io/specifications/FamilySearchGEDCOMv7.html#ASSOCIATION_STRUCTURE
+ */
+
+export type Association = {
+  ASSO: ChunkWith<
+    {
+      "@value": Xref;
+      PHRASE?: string;
+      ROLE: Role;
+    } & Optional<Several<Note>> &
+      Optional<Several<SourceCitation>>
+  >;
+};

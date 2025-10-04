@@ -1,9 +1,12 @@
 import { Xref } from "../parser/types.ts";
-import { Chunk, ScalarOrObject, Note, MultimediaLink, Multiple } from "./types.ts";
-import { Date, DatePeriod } from "./date.ts";
+import { ChunkWith, ScalarOrObject, Multiple, Optional, Several } from "./types.ts";
+import { DatePeriod, Age, Adoption, IndividualEventType, FamilyEventType, GenericEventType, UniqueIdentifier } from "../gedcom/types.ts";
+import { Date } from "./date.ts";
 import { Address, Place } from "./location.ts";
+import { Note } from "./note.ts";
 import { Association } from "./association.ts";
 import { SourceCitation } from "./source.ts";
+import { MultimediaLink } from "./multimedia.ts";
 
 /**
  * Event structure
@@ -22,52 +25,33 @@ export type EventDetail = {
   CAUS?: string;
   RESN?: string;
   SDATE?: Date;
-  ASSO?: Multiple<Association>;
-  NOTE?: Multiple<Note>;
-  SNOTE?: Multiple<Xref>;
-  SOUR?: Multiple<SourceCitation>;
-  OBJE?: Multiple<MultimediaLink>;
-  UID?: Multiple<string>;
-};
+  UID?: Multiple<UniqueIdentifier>;
+} & Optional<Several<Association>> &
+  Optional<Several<MultimediaLink>> &
+  Optional<Several<SourceCitation>> &
+  Optional<Several<Note>>;
 
-type AgeValue = `${number}y` | `${number}m` | `${number}w` | `${number}d`;
-type Age = `${AgeValue}` | `<${AgeValue}` | `>${AgeValue}`;
+export type IndividualEventDetail<T = {}> = ChunkWith<
+  EventDetail & {
+    AGE?: ScalarOrObject<Age, { PHRASE: string }>;
+  } & T
+>;
 
-export type IndividualEventDetail = EventDetail & {
-  AGE?: ScalarOrObject<Age, { PHRASE: string }>;
-};
+export type IndividualEvent =
+  | {
+      [key in IndividualEventType]: IndividualEventDetail<{ TYPE?: string }>;
+    }
+  | {
+      [key in "BIRT" | "CHR"]: IndividualEventDetail<{ TYPE?: string; FAMC?: Xref }>;
+    }
+  | {
+      ADOP: IndividualEventDetail<{ TYPE?: string; FAMC?: ScalarOrObject<Xref, { ADOP?: ScalarOrObject<Adoption, { PHRASE: string }> }> }>;
+    }
+  | {
+      [key in GenericEventType]: IndividualEventDetail<{ TYPE: string }>;
+    };
 
-type Adoption = "HUSB" | "WIFE" | "BOTH";
-
-type IndividualEventBase<T = {}> = Chunk<IndividualEventDetail & { TYPE?: string } & T>;
-
-export type IndividualEvent = {
-  ADOP?: IndividualEventBase<{ FAMC?: ScalarOrObject<Xref, { ADOP?: ScalarOrObject<Adoption, { PHRASE: string }> }> }>;
-  BAPM?: IndividualEventBase;
-  BARM: IndividualEventBase;
-  BASM?: IndividualEventBase;
-  BIRT?: IndividualEventBase<{ FAMC?: Xref }>;
-  BLES?: IndividualEventBase;
-  BURI?: IndividualEventBase;
-  CENS?: IndividualEventBase;
-  CHR?: IndividualEventBase<{ FAMC?: Xref }>;
-  CHRA?: IndividualEventBase;
-  CONF?: IndividualEventBase;
-  CREM?: IndividualEventBase;
-  DEAT?: IndividualEventBase;
-  EMIG?: IndividualEventBase;
-  FCOM?: IndividualEventBase;
-  GRAD?: IndividualEventBase;
-  IMMI?: IndividualEventBase;
-  NATU?: IndividualEventBase;
-  ORDN?: IndividualEventBase;
-  PROB?: IndividualEventBase;
-  RETI?: IndividualEventBase;
-  WILL?: IndividualEventBase;
-  EVEN?: IndividualEventBase<{ TYPE: string }>;
-};
-
-export type FamilyEventDetail = Chunk<
+export type FamilyEventDetail = ChunkWith<
   {
     HUSB?: {
       AGE: ScalarOrObject<Age, { PHRASE: string }>;
@@ -78,24 +62,19 @@ export type FamilyEventDetail = Chunk<
   } & EventDetail
 >;
 
-export type FamilyEvent = {
-  ANUL?: Multiple<FamilyEventDetail>;
-  CENS?: Multiple<FamilyEventDetail>;
-  DIV?: Multiple<FamilyEventDetail>;
-  DIVF?: Multiple<FamilyEventDetail>;
-  ENGA?: Multiple<FamilyEventDetail>;
-  MARB?: Multiple<FamilyEventDetail>;
-  MARC?: Multiple<FamilyEventDetail>;
-  MARR?: Multiple<FamilyEventDetail>;
-  MARL?: Multiple<FamilyEventDetail>;
-  MARS?: Multiple<FamilyEventDetail>;
-  RESI?: Multiple<FamilyEventDetail>;
-  EVEN?: Multiple<ScalarOrObject<string, FamilyEventDetail>>;
-};
+export type FamilyEvent =
+  | {
+      [key in FamilyEventType]: Multiple<FamilyEventDetail>;
+    }
+  | {
+      [key in GenericEventType]: Multiple<ScalarOrObject<string, FamilyEventDetail>>;
+    };
 
-export type NonEvent = Chunk<{
-  DATE?: ScalarOrObject<DatePeriod, { PHRASE?: string }>;
-  NOTE?: Multiple<Note>;
-  SNOTE?: Multiple<Xref>;
-  SOUR?: Multiple<SourceCitation>;
-}>;
+export type NonEvent = {
+  NO: ChunkWith<
+    {
+      DATE?: ScalarOrObject<DatePeriod, { PHRASE?: string }>;
+    } & Optional<Several<Note>> &
+      Optional<Several<SourceCitation>>
+  >;
+};
