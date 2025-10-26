@@ -1,5 +1,5 @@
 import { Chunk } from "../deserializer/types";
-import { WithContext, Thing, PostalAddress, Event, Place, ArchiveOrganization, ArchiveComponent, DigitalDocument, MediaObject, Role } from "schema-dts";
+import { WithContext, Thing, PostalAddress, Event, Place, ArchiveOrganization, ArchiveComponent, DigitalDocument, MediaObject, Role, CreativeWork } from "schema-dts";
 
 type ObjectTypes =
   | {}
@@ -85,3 +85,5 @@ export type DigitalDocumentLD = ObjectLD<DigitalDocument>;
 export type MediaLD = ObjectLD<MediaObject>;
 
 export type RoleLD = ObjectLD<Role>;
+
+export type CreativeWorkLD = ObjectLD<CreativeWork>;
