@@ -129,7 +129,7 @@ export type Restriction = keyof typeof constants.RESTRICTION;
 
 export type Sex = keyof typeof constants.SEX;
 
-export type Role = keyof typeof constants.ROLE;
+export type Role = keyof typeof constants.ROLE_TYPES;
 
 export type Medium = keyof typeof constants.MEDIUM;
 
