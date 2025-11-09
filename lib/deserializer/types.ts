@@ -1,8 +1,10 @@
 import { Xref, Tag } from "../parser/types.ts";
 import { Language, Reference, UniqueIdentifier, ExternalIdentifier, Role as RoleIdentifier, Medium as MediumIdentifier } from "../gedcom/types.ts";
 import { URI } from "../utils/types.ts";
+import { Registry } from "../deserializer";
 
 export type Chunk = {
+  "@registry": Registry;
   "@parent"?: Chunk;
   "@type": Tag;
   "@index"?: number;
